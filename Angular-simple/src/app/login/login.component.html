@@ -6,16 +6,16 @@
         <tr>
             <th>Login ID: </th>
             <td><input type="text" name="loginId" [(ngModel)]="form.data.loginId" /></td>
-             <td *ngIf="form.inputerror.loginId != null" style="position: fixed;">
-            <font color="red">{{form.inputerror.loginId}}</font>
-        </td>
+            <td *ngIf="form.inputerror.loginId != null" style="position: fixed;">
+                <font color="red">{{form.inputerror.loginId}}</font>
+            </td>
         </tr>
         <tr>
             <th>Password: </th>
             <td><input type="text" name="password" [(ngModel)]="form.data.password" /></td>
             <td *ngIf="form.inputerror.password != null" style="position: fixed;">
-            <font color="red"> {{form.inputerror.password}}</font>
-        </td>
+                <font color="red">{{form.inputerror.password}}</font>
+            </td>
         </tr>
         <tr>
             <th></th>

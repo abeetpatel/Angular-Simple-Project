@@ -15,33 +15,36 @@ export class LoginComponent {
     inputerror: {}
   }
 
-  constructor(private httpClient: HttpClient, public route: Router) {
+  constructor(private httpClient: HttpClient, public router: Router) {
 
   }
 
   signIn() {
-    console.log('Login Id: ', this.form.data.loginId)
-    console.log('Password: ', this.form.data.password)
-   this.httpClient.post('http://localhost:8080/Auth/login', this.form.data).subscribe((res: any) => {
+
+    this.httpClient.post('http://localhost:8080/Auth/login', this.form.data).subscribe((res: any) => {
+
       console.log('res => ', res)
 
       this.form.message = '';
       this.form.inputerror = {};
 
       if (res.result.message) {
-        this.form.message = res.result.message;   
+        this.form.message = res.result.message;
       }
 
       if (!res.success) {
         this.form.inputerror = res.result.inputerror;
       }
-      if (res.success) {
-        this.route.navigateByUrl('welcome')
+
+      if (res.success && res.result.data != null) {
+        localStorage.setItem('firstName', res.result.data.firstName)
+        localStorage.setItem('roleName', res.result.data.roleName)
+        this.router.navigateByUrl('welcome');
       }
     })
   }
 
   signUp() {
-    this.route.navigateByUrl('signup')
+    this.router.navigateByUrl('signup')
   }
 }
