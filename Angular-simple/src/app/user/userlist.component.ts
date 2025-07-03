@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-userlist',
@@ -17,13 +18,20 @@ export class UserlistComponent implements OnInit {
     pageNo: 0
   }
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,public router: Router) {
     console.log('in userlist constructor')
   }
 
   ngOnInit(): void {
     console.log('in userlist ngOnInit')
+    this.preload();
     this.search();
+  }
+
+  preload() {
+    this.httpClient.get('http://localhost:8080/User/preload').subscribe((res: any) => {
+      this.form.preload = res.result.roleList;
+    });
   }
 
   search() {
@@ -43,4 +51,19 @@ export class UserlistComponent implements OnInit {
     console.log('pageNo => ', this.form.pageNo)
     this.search();
   }
+
+  onCheckboxChange(userId: number) {
+    console.log('Checkbox with ID', userId, 'is checked/unchecked');
+    this.form.deleteParams.id = userId;
+  }
+
+  delete() {
+    this.httpClient.get('http://localhost:8080/User/delete/' + this.form.deleteParams.id).subscribe((res: any) => {
+      this.form.message = res.result.message;
+      console.log('message => ', this.form.message)
+      this.form.pageNo = 0;
+      this.search();
+    });
+  }
+
 }

@@ -12,28 +12,28 @@
 <table align="center">
     <tr>
         <th align="left">First Name :</th>
-        <td><input type="text" [(ngModel)]="form.data.firstName" name="firstName" /></td>
+        <td><input type="text" placeholder="Enter First Name" [(ngModel)]="form.data.firstName" name="firstName" /></td>
         <td *ngIf="form.inputerror.firstName != null" style="position: fixed;">
             <font color="red">{{form.inputerror.firstName}}</font>
         </td>
     </tr>
     <tr>
         <th align="left">Last Name :</th>
-        <td><input type="text" [(ngModel)]="form.data.lastName" name="lastName" /></td>
+        <td><input type="text" placeholder="Enter Last Name" [(ngModel)]="form.data.lastName" name="lastName" /></td>
         <td *ngIf="form.inputerror.lastName != null" style="position: fixed;">
             <font color="red"> {{form.inputerror.lastName}}</font>
         </td>
     </tr>
     <tr>
         <th align="left">Login ID :</th>
-        <td><input type="text" [(ngModel)]="form.data.loginId" name="loginId" /></td>
+        <td><input type="text" placeholder="Enter Login ID" [(ngModel)]="form.data.loginId" name="loginId" /></td>
         <td *ngIf="form.inputerror.loginId != null" style="position: fixed;">
             <font color="red">{{form.inputerror.loginId}}</font>
         </td>
     </tr>
     <tr>
         <th align="left">Password :</th>
-        <td><input type="text" [(ngModel)]="form.data.password" name="password" /></td>
+        <td><input type="text" placeholder="Enter Password" [(ngModel)]="form.data.password" name="password" /></td>
         <td *ngIf="form.inputerror.password != null" style="position: fixed;">
             <font color="red"> {{form.inputerror.password}}</font>
         </td>
@@ -52,3 +52,4 @@
 
     </tr>
 </table>
+<app-footer></app-footer>

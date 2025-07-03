@@ -12,6 +12,7 @@ import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './user/user.component';
 import { UserlistComponent } from './user/userlist.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { UserlistComponent } from './user/userlist.component';
     NavbarComponent,
     SignupComponent,
     UserComponent,
-    UserlistComponent
+    UserlistComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

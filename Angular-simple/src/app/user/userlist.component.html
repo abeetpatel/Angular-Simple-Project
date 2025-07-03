@@ -3,11 +3,17 @@
     List</h1>
 <table style="width: 100%">
     <tr>
-        <td align="center"><label><b>First Name : </b></label><input type="text"
+        <td align="center"><label><b>First Name : </b></label><input type="text" placeholder="Enter First Name"
                 [(ngModel)]="form.searchParams.firstName" /> &nbsp;
             <label><b>DOB : </b></label>
             <input type="date" name="dob" [(ngModel)]="form.searchParams.dob" /> &nbsp;
+             <label><b>Role : </b></label>
+            <select name="id" [(ngModel)]="form.searchParams.roleId">
+                <option [ngValue]="" value="undefined">{{'------Select Role-------' }}</option>
+                <option *ngFor="let obj of form.preload" [value]="obj.key">{{obj.value}}</option>
+            </select> &nbsp;
             <button (click)="search()">search</button>&nbsp;
+            <a href="/userlist"><button>reset</button></a>&nbsp;
         </td>
     </tr>
 </table>
@@ -27,7 +33,7 @@
     </tr>
     <tr *ngFor="let m of form.list; let i = index">
         <td style="text-align: center;">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="onCheckboxChange(m.id)"/>
         </td>
         <td style="text-align: center;">{{(form.pageNo*5)+i+ 1}}</td>
         <td> <img src="http://localhost:8080/User/profilePic/{{m.id}}" height="55px" width="80px"></td>
@@ -45,11 +51,12 @@
 <table style="width: 100%">
     <tr>
         <td style="width: 25%"><button [disabled]="form.pageNo == 0" (click)="previous()">previous</button></td>
-        <td align="center" style="width: 25%"><a href="/user"><button>add</button></a>
+        <td align="center" style="width: 25%"><a href="/user"><button>new</button></a>
         </td>
-        <td align="center" style="width: 25%"><button>delete</button>
+        <td align="center" style="width: 25%"><button (click)="delete()">delete</button>
         </td>
         <td style="width: 25%" align="right"><button [disabled]="form.list.length < 5" (click)="next()">next</button>
         </td>
     </tr>
 </table>
+<app-footer></app-footer>

@@ -5,14 +5,14 @@
     <table>
         <tr>
             <th>Login ID: </th>
-            <td><input type="text" name="loginId" [(ngModel)]="form.data.loginId" /></td>
+            <td><input type="text" name="loginId" placeholder="Enter Login ID" [(ngModel)]="form.data.loginId" /></td>
             <td *ngIf="form.inputerror.loginId != null" style="position: fixed;">
                 <font color="red">{{form.inputerror.loginId}}</font>
             </td>
         </tr>
         <tr>
             <th>Password: </th>
-            <td><input type="text" name="password" [(ngModel)]="form.data.password" /></td>
+            <td><input type="text" name="password" placeholder="Enter Password" [(ngModel)]="form.data.password" /></td>
             <td *ngIf="form.inputerror.password != null" style="position: fixed;">
                 <font color="red">{{form.inputerror.password}}</font>
             </td>
@@ -26,3 +26,4 @@
         </tr>
     </table>
 </div>
+<app-footer></app-footer>
