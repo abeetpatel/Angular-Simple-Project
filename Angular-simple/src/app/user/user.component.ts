@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit{
+export class UserComponent implements OnInit {
 
   form: any = {
       data: {},
@@ -14,18 +15,32 @@ export class UserComponent implements OnInit{
       inputerror: {}
     }
    fileToUpload: any = null;
-    constructor(private httpClient: HttpClient) {
-     this.preload();
+    constructor(private httpClient: HttpClient, private route: ActivatedRoute) {
+     this.route.params.subscribe((params: any) => {
+      this.form.data.id = params["id"];
+      console.log(this.form.data.id)
+    })
     }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-    this.preload();
-  }
+  
+ngOnInit(): void {
+  console.log('in ngoninit method');
+  this.preload();
+  if (this.form.data.id && this.form.data.id > 0) {
+      this.display();
+    }
+}
 
    preload() {
     this.httpClient.get('http://localhost:8080/User/preload').subscribe((res: any) => {
       console.log(res)
       this.form.preload = res.result.roleList;
+    });
+  }
+
+   display() {
+    this.httpClient.get('http://localhost:8080/User/get/' + this.form.data.id).subscribe((res: any) => {
+      console.log(res)
+      this.form.data = res.result.data;
     });
   }
 
@@ -56,7 +71,9 @@ export class UserComponent implements OnInit{
 
       });
     }
-     myFile() {
+     
+    
+    myFile() {
     const formData = new FormData();
     formData.append('file', this.fileToUpload);
     return this.httpClient.post("http://localhost:8080/User/profilePic/" + this.form.data.id, formData).subscribe((res: any) => {

@@ -66,4 +66,8 @@ export class UserlistComponent implements OnInit {
     });
   }
 
+   edit(page: any) {
+    this.router.navigateByUrl(page);
+  }
+
 }

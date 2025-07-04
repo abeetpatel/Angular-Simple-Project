@@ -43,7 +43,7 @@
         <td style="text-align: center;">{{m.password}}</td>
         <td style="text-align: center;">{{m.dob | date: 'dd-MM-yyyy'}}</td>
         <td style="text-align: center;">{{m.roleName}}</td>
-        <td style="text-align: center;"> <a href="#" style="color: blue;">edit
+        <td style="text-align: center;"> <a (click)="edit( '/user/' +  m.id)" style="color: blue;">edit
             </a></td>
     </tr>
 </table>
