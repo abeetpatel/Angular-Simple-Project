@@ -9,10 +9,12 @@ import { FormsModule } from '@angular/forms';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { SignupComponent } from './signup/signup.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './user/user.component';
 import { UserlistComponent } from './user/userlist.component';
 import { FooterComponent } from './footer/footer.component';
+import { HttpServiceService } from './http-service.service';
+import { AuthServiceService } from './auth-service.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,12 @@ import { FooterComponent } from './footer/footer.component';
     HttpClientModule
   
 ],
-  providers: [],
+  providers: [
+     {
+      provide: HTTP_INTERCEPTORS, useClass: AuthServiceService, multi: true
+    },
+    HttpServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

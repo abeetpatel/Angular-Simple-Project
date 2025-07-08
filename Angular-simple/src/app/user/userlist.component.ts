@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpServiceService } from '../http-service.service';
 
 @Component({
   selector: 'app-userlist',
@@ -18,7 +19,7 @@ export class UserlistComponent implements OnInit {
     pageNo: 0
   }
 
-  constructor(private httpClient: HttpClient,public router: Router) {
+  constructor(private httpservice: HttpServiceService ,private httpClient: HttpClient,public router: Router) {
     console.log('in userlist constructor')
   }
 
@@ -29,14 +30,16 @@ export class UserlistComponent implements OnInit {
   }
 
   preload() {
-    this.httpClient.get('http://localhost:8080/User/preload').subscribe((res: any) => {
-      this.form.preload = res.result.roleList;
+    var self = this
+    this.httpservice.get('http://localhost:8080/User/preload', function(res: any){
+      self.form.preload = res.result.roleList;
     });
   }
 
   search() {
-    this.httpClient.post('http://localhost:8080/User/search/' + this.form.pageNo, this.form.searchParams).subscribe((res: any) => {
-      this.form.list = res.result.data;
+    var self = this
+    this.httpservice.post('http://localhost:8080/User/search/' + this.form.pageNo, this.form.searchParams, function(res: any){
+      self.form.list = res.result.data;
     })
   }
 
@@ -58,11 +61,12 @@ export class UserlistComponent implements OnInit {
   }
 
   delete() {
-    this.httpClient.get('http://localhost:8080/User/delete/' + this.form.deleteParams.id).subscribe((res: any) => {
-      this.form.message = res.result.message;
-      console.log('message => ', this.form.message)
-      this.form.pageNo = 0;
-      this.search();
+    var self = this 
+    this.httpservice.get('http://localhost:8080/User/delete/' + this.form.deleteParams.id, function(res: any){
+      self.form.message = res.result.message;
+      console.log('message => ', self.form.message)
+      self.form.pageNo = 0;
+      self.search();
     });
   }
 

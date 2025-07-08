@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpServiceService } from '../http-service.service';
 
 @Component({
   selector: 'app-login',
@@ -15,31 +16,40 @@ export class LoginComponent {
     inputerror: {}
   }
 
-  constructor(private httpClient: HttpClient, public router: Router) {
+  constructor(private httpservice: HttpServiceService, public router: Router, private route: ActivatedRoute ) {
 
   }
 
-  signIn() {
+    ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.form.message = params['errorMessage'] || null;
+      console.log('msg = >', this.form.message)
+    });
+  }
 
-    this.httpClient.post('http://localhost:8080/Auth/login', this.form.data).subscribe((res: any) => {
+  signIn() {
+    var self = this
+    this.httpservice.post('http://localhost:8080/Auth/login', this.form.data, function(res: any){
 
       console.log('res => ', res)
 
-      this.form.message = '';
-      this.form.inputerror = {};
+      self.form.message = '';
+      self.form.inputerror = {};
 
       if (res.result.message) {
-        this.form.message = res.result.message;
+        self.form.message = res.result.message;
       }
 
       if (!res.success) {
-        this.form.inputerror = res.result.inputerror;
+        self.form.inputerror = res.result.inputerror;
       }
 
       if (res.success && res.result.data != null) {
         localStorage.setItem('firstName', res.result.data.firstName)
         localStorage.setItem('roleName', res.result.data.roleName)
-        this.router.navigateByUrl('welcome');
+        localStorage.setItem('id', res.result.data.id)  
+             localStorage.setItem('token', 'Bearer ' + res.result.token)
+        self.router.navigateByUrl('welcome');
       }
     })
   }

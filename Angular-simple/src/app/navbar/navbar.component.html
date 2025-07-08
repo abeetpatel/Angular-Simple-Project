@@ -15,8 +15,11 @@
                 <a href="/login"><b>Login</b></a>
             </div>
         </td>
-        
+        <td style="width: 2%;">
+            <div *ngIf="isLogin()">
+                <img src="http://localhost:8080/User/profilePic/{{form.data.id}}" height="90px" width="90px">
+            </div>
+        </td>
     </tr>
 </table>
-
 <hr>
